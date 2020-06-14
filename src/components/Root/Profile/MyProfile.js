@@ -228,7 +228,7 @@ const MyProfile = (props) => {
                   !profileUser && (
                     <Button
                   color="primary"
-                  style={{ margin: 20 }}
+                  style={{ margin: 20, width:150 }}
                   onClick={() =>
                     updateProfileToMongo({
                       groupNo,
@@ -252,7 +252,7 @@ const MyProfile = (props) => {
 
               <div class="col-sm">
                 <Button
-                  style={{ margin: 20 }}
+                  style={{ margin: 20, width:150 }}
                   color="primary"
                   className="col btn btn-primary btn-lg"
                   onClick={() => setredirection("Group")}
@@ -262,7 +262,7 @@ const MyProfile = (props) => {
               </div>
               <div class="col-sm">
                 <Button
-                  style={{ margin: 20 }}
+                  style={{ margin: 20, width:150 }}
                   color="primary"
                   className="col btn btn-primary btn-lg"
                   onClick={() => setredirection("Students")}
@@ -273,7 +273,7 @@ const MyProfile = (props) => {
               <div class="col-sm">
                 {profileUser && (
                   <Button
-                    style={{ margin: 20 }}
+                    style={{ margin: 20, width:150 }}
                     color="primary"
                     className="col btn btn-primary btn-lg"
                     onClick={() => sendSMS(content)}
