@@ -38,10 +38,7 @@ const useStyles = makeStyles((theme) => ({
 export default function SignIn() {
   const [redirectToHome,setRedirectToHome]= useState(false);
   const [redirectToRegister,setRedirectToRegister]= useState(false);
-  const [redirectToProfile,setRedirectToProfile]= useState(false);
-  
   const [username,setUsername]= useState('');
-
   const classes = useStyles();
 
 if (redirectToHome) {
