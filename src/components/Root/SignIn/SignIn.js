@@ -1,9 +1,9 @@
 import React, { useState, seEffect, useEffect } from "react";
 import "../../../styles/App.css";
 import "../../../styles/index.css";
-import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { Redirect } from "react-router-dom";
 import * as firebase from "firebase";
+import { Link } from "@material-ui/core";
 
 const SignIn = () => {
   const [status, currentStatus] = useState(null);
@@ -20,27 +20,26 @@ const SignIn = () => {
       .auth()
       .signInWithEmailAndPassword(username, password)
       .then((data) => {
-        setLoggedInUser(data)
-        setCurrentUserForRedirect(username)
-      .catch((err) => {
-        alert("Failed to login",err)
+        setLoggedInUser(data);
+        setCurrentUserForRedirect(username).catch((err) => {
+          alert("Failed to login", err);
+        });
       });
-  });
-};
-
+  };
 
   const setCurrentUserForRedirect = async (username) => {
     fetch(`https://groupmateproject.herokuapp.com/user/userbyemail/`, {
       method: "post",
-      body: JSON.stringify({email:username}),
+      body: JSON.stringify({ email: username }),
       headers: {
         "Content-Type": "application/json",
       },
-    }).then(response => response.json())
-    .then(data => {
-      setCurrentUser(data.response);
-      currentStatus("user");
-    });
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setCurrentUser(data.response);
+        currentStatus("user");
+      });
   };
 
   if (status === "user") {
@@ -57,52 +56,54 @@ const SignIn = () => {
     return <Redirect to="/signup" />;
   } else {
     return (
-      <div>
-        <Form className="App">
-          <h1 className="Cen">Teamup USER LOGIN</h1>
-          <h2 className="Cen">Enter Details</h2>
-          <FormGroup>
-            <label className="Cen">Username</label>
-            <Input
-              className="Username"
-              type="Username"
-              placeholder="Username"
+      <div >
+        <form style={{ width: "35%", padding: 100, margin: "auto" }}>
+          <div style={{padding:'5%' }} >
+            <h1 class="d-flex justify-content-center">Team up!</h1>
+            <h6 class="d-flex justify-content-center">Mate, where's your group?</h6>
+          </div>
+          <h4>Sign In</h4>
+          <div className="form-group">
+            <label>Email address</label>
+            <input
+              type="email"
+              className="form-control"
+              placeholder="Enter email"
               onChange={(event) => {
                 setusername(event.target.value);
               }}
             />
-          </FormGroup>
-          <FormGroup>
-            <label className="Cen">Password</label>
-            <Input
-              className="Password"
-              // type="Password"
-              placeholder="Password"
+          </div>
+
+          <div className="form-group">
+            <label>Password</label>
+            <input
+              type="password"
+              className="form-control"
+              placeholder="Enter password"
               onChange={(event) => {
                 setpassword(event.target.value);
               }}
             />
-          </FormGroup>
-          <div className="Left">
-            <a href="/forgot-password">Forgot Password</a>
           </div>
-          <Button
-            onClick={() => {
+          <button
+            type="submit"
+            className="btn btn-primary btn-block"
+            style={{ width: "50%" }}
+            onClick={(event) => {
+              event.preventDefault();
               SignInUser(username, password);
             }}
-            className="block"
           >
-            Log in
-          </Button>
-          <Button
-            onClick={() => {
+            Submit
+          </button>
+          <br />
+          <p className="forgot-password text-center">
+            Dont have an account? <Link style={{color:'blue'}} type={'button'} onClick={() => {
               currentStatus("signup");
-            }}
-            className="block"
-          >
-            Sign up
-          </Button>
-        </Form>
+            }}>Sign up</Link>
+          </p>
+        </form>
       </div>
     );
   }

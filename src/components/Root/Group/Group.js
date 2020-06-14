@@ -93,14 +93,14 @@ if(redirect==='profile'){
 }else
     return (
       <TableContainer
-        style={{ margin: "auto", height: 600, width: 900 }}
-        component={Paper}
+      component={Paper}
+      class="table"
+      style={{paddingRight:60, paddingLeft:60, paddingTop:10}}
       >
         <Table
           aria-label="simple table"
-          style={{ margin: "auto", height: 600, width: 900 }}
         >
-          <TableHead>
+          <TableHead class="thead-light">
             <TableRow>
               <TableCell>First Name</TableCell>
               <TableCell align="right">Last Name</TableCell>
@@ -127,24 +127,34 @@ if(redirect==='profile'){
 
   return (
     <React.Fragment>
+      <h1 class="d-flex justify-content-center">Team up!</h1>
+          <h6 class="d-flex justify-content-center"> Mate, where's your group?
+          </h6>
+          <h3 class="d-flex justify-content-center">Group</h3>
       <div>{groupList()}</div>
+      
       <div style={{ margin: "auto", height: 300, width: 900, padding: 20 }}>
+      
         <TextField
+          style={{margin:20}}
           variant={"outlined"}
           value={groupNum}
           onChange={(event) => {
             setGroupNum(event.target.value);
           }}
         />
+        <br/>
         <Button
-          style={{ width: 420 }}
+          style={{ margin:20}}
+          color='primary'
           onClick={() => AssignGroup(cuser, groupdata, setgroup, groupNum)}
           className="block"
         >
           JOIN
         </Button>
         <Button
-          style={{ width: 420 }}
+          color='primary'
+          style={{ margin:20}}
           onClick={() => {
             console.log('cuser==',cuser)
             AssignGroup(cuser, groupdata, setgroup, 0);
@@ -154,7 +164,8 @@ if(redirect==='profile'){
           Leave
         </Button>
         <Button
-          style={{ width: 420 }}
+          color='primary'
+          style={{  margin:20}}
           onClick={() => {
             setRedirect('profile')
           }}
