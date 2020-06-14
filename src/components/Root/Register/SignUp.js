@@ -1,9 +1,9 @@
 import React, { useState} from "react";
-import { Button, Form, FormGroup, Label, Input } from "reactstrap";
+import { Button, Form, FormGroup, Input } from "reactstrap";
 import { Redirect } from "react-router-dom";
 import * as firebase from "firebase";
 
-const signup = (user, currentStatus) => {
+const signup = (user, currentStatus, phoneNumber) => {
   firebase
     .auth()
     .createUserWithEmailAndPassword(user.email, user.password)
@@ -17,7 +17,7 @@ const signup = (user, currentStatus) => {
         lastName: user.lastName,
         email: user.email,
         password: user.password,
-        phoneNumber: 1234,
+        phoneNumber: phoneNumber,
         skillSet: "node",
         unit: "node",
         groupNum: 0,
@@ -57,17 +57,16 @@ const SignUp = () => {
       firstName: firstname,
       lastName: lastname,
       email: username,
-      phoneNumber: 1234,
+      phoneNumber: phonenumber,
       skillSet: "node",
       unit: "node",
       groupNum: 0,
     };
-    setCurrentUser(userObj);
     return (
       <Redirect
         to={{
           pathname: "/Profile",
-          currentUser: currentUser,
+          currentUser: userObj,
         }}
       />
     );
@@ -147,18 +146,20 @@ const SignUp = () => {
               className="btn btn-primary btn-block"
               color='primary'
               style={{ width: "50%", margin:'auto' }}
-                onClick={() =>
+                onClick={(event) =>{
+                  event.preventDefault();
                   signup(
                     {
                       firstName: firstname,
                       lastName: lastname,
                       email: username,
-                      password: password,
+                      password: password
                     },
-                    currentStatus
+                    currentStatus,
+                    phonenumber
                   )
                 }
-              >
+                } >
                 Sign Up
               </Button>
             </Form>

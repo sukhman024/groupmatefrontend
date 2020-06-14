@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { Redirect } from "react-router-dom";
 
-const updateProfileToMongo = (data) => {
+const updateProfileToMongo = (data, setcurrentUser, setUserlist) => {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Content-Type", "text/plain");
@@ -13,7 +13,10 @@ const updateProfileToMongo = (data) => {
     phoneNumber: data.phonenumber,
     skillSet: data.skillset,
     unit: data.unit,
+    groupNo:data.groupNo,
+    userEmail:data.userEmail
   };
+  
   let x = data.userEmail;
   fetch(`https://groupmateproject.herokuapp.com/user/update/${x}`, {
     method: "put",
@@ -24,7 +27,10 @@ const updateProfileToMongo = (data) => {
   })
     .then((res) => res.json())
     .then((data) => {
-      console.log("Updated data " + data);
+      setcurrentUser(userObj);
+      fetch("https://groupmateproject.herokuapp.com/user")
+      .then((res) => res.json())
+      .then((data) => setUserlist(data.response));
     });
 };
 
@@ -32,7 +38,7 @@ const MyProfile = (props) => {
   const [locationAPI, setlocationAPI] = useState(null);
   const [currentUser, setcurrentUser] = useState(props.location.currentUser);
   const [profileUser, setprofileUser] = useState(props.location.profileUser);
-  const [groupNo, setGroupNo] = useState(props.location.currentUser?.GroupNo);
+  const [groupNo, setGroupNo] = useState(props.location.currentUser?.groupNum);
   const [content, setContent] = useState('');
   const [firstname, setfirstname] = useState(
     props.location.currentUser?.firstName
@@ -46,13 +52,13 @@ const MyProfile = (props) => {
   const [skillset, setskillset] = useState(
     props.location.currentUser?.skillSet
   );
-  const [unit, setunit] = useState(props.location.currentUser?.Unit);
+  const [unit, setunit] = useState(props.location.currentUser?.unit);
   const [redirection, setredirection] = useState("");
   const [userEmail, setUserEmail] = useState(props.location.currentUser?.email);
   const [userlist, setUserlist] = useState(props.location.userlist);
 
   useEffect(() => {
-    fetch("http://ipapi.co/json/")
+    fetch("https://ipapi.co/json/")
       .then((res) => res.json())
       .then((result) => {
         setlocationAPI(result);
@@ -101,7 +107,7 @@ const MyProfile = (props) => {
     );
   } else {
     return (
-      <div>
+      <div style={{height:'100rem'}}>
         <Form
           className="App"
           style={{ width: "35%", padding: 50, margin: "auto" }}
@@ -116,7 +122,7 @@ const MyProfile = (props) => {
               className="Username"
               type="GroupNo"
               placeholder="GroupNo"
-              value={props.location.currentUser?.groupNum}
+              value={groupNo}
               onChange={(event) => {
                 setGroupNo(event.target.value);
               }}
@@ -150,8 +156,7 @@ const MyProfile = (props) => {
             <label className="Cen">City</label>
             <Input
               className="Username"
-              type="LastName"
-              placeholder="LastName"
+              placeholder="City"
               value={locationAPI?.city}
               onChange={(event) => {
                 setlastname(event.target.value);
@@ -162,8 +167,7 @@ const MyProfile = (props) => {
             <label className="Cen">State</label>
             <Input
               className="Username"
-              type="LastName"
-              placeholder="LastName"
+              placeholder="State"
               value={locationAPI?.region}
               onChange={(event) => {
                 setlastname(event.target.value);
@@ -174,8 +178,7 @@ const MyProfile = (props) => {
             <label className="Cen">PhoneNumber</label>
             <Input
               className="Username"
-              type="PhoneNumber"
-              placeholder="PhoneNumber"
+              placeholder="Phone Number"
               value={phonenumber}
               onChange={(event) => {
                 setphonenumber(event.target.value);
@@ -221,7 +224,9 @@ const MyProfile = (props) => {
           <div class="container">
             <div class="row">
               <div class="col-sm">
-                <Button
+                {
+                  !profileUser && (
+                    <Button
                   color="primary"
                   style={{ margin: 20 }}
                   onClick={() =>
@@ -233,12 +238,16 @@ const MyProfile = (props) => {
                       skillset,
                       unit,
                       userEmail,
-                    })
+                    },
+                    setcurrentUser
+                    ,setUserlist)
                   }
                   className="col btn btn-primary btn-lg"
                 >
                   Update
                 </Button>
+                  )
+                  }
               </div>
 
               <div class="col-sm">

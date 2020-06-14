@@ -56,7 +56,7 @@ const SignIn = () => {
     return <Redirect to="/signup" />;
   } else {
     return (
-      <div >
+      <div style={{height:'100rem'}}>
         <form style={{ width: "35%", padding: 100, margin: "auto" }}>
           <div style={{padding:'5%' }} >
             <h1 class="d-flex justify-content-center">Team up!</h1>

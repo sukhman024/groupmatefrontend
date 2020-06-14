@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import "../../../styles/App.css";
-import * as ReactBootStrap from "react-bootstrap";
-import { Button, Form, FormGroup, Label, Input, Table } from "reactstrap";
+import { Button,  Table } from "reactstrap";
 import { TextField } from "@material-ui/core";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -16,6 +14,7 @@ const AssignGroup = (cuser, groupdata, setgroup, groupNum) => {
   var groupmembers = [...groupdata];
   var element = {};
   var counter = 0;
+  groupNum= Number(groupNum);
   if (cuser.groupNum === 0 && groupNum=== 0 ) {
     alert("already unassigned");
   } else {
@@ -25,7 +24,6 @@ const AssignGroup = (cuser, groupdata, setgroup, groupNum) => {
         counter++;
       }
     }
-    console.log('counter==',counter)
     if (counter >= 3) {
       alert("Group already full");
     } else {
@@ -48,11 +46,11 @@ function updateMongo(element, groupNum, cuser) {
   myHeaders.append("Content-Type", "text/plain");
 
   var userObj = {
-    firstName: element.firstName,
-    lastName: element.lastName,
-    phoneNumber: element.phoneNumber,
-    skillSet: element.skillSet,
-    unit: element.unit,
+    firstName: cuser.firstName,
+    lastName: cuser.lastName,
+    phoneNumber: cuser.phoneNumber,
+    skillSet: cuser.skillSet,
+    unit: cuser.unit,
     groupNum: groupNum,
   };
   
@@ -76,7 +74,6 @@ const Group = (props) => {
   const [groupNum, setGroupNum] = useState(
     props.location.currentUser?.groupNum
   );
-  console.log('props.location.currentUser==',props.location.currentUser)
   var [cuser, setcuser] = useState(props.location.currentUser);
   // const [userlist, setuserlist] = useState(props.location.userlist);
   const [groupdata, setgroup] = useState(props.location.userlist);
@@ -126,6 +123,7 @@ if(redirect==='profile'){
   };
 
   return (
+    <div >
     <React.Fragment>
       <h1 class="d-flex justify-content-center">Team up!</h1>
           <h6 class="d-flex justify-content-center"> Mate, where's your group?
@@ -156,7 +154,6 @@ if(redirect==='profile'){
           color='primary'
           style={{ margin:20}}
           onClick={() => {
-            console.log('cuser==',cuser)
             AssignGroup(cuser, groupdata, setgroup, 0);
           }}
           className="block"
@@ -175,6 +172,7 @@ if(redirect==='profile'){
         </Button>
       </div>
     </React.Fragment>
+    </div>
   );
 };
 
