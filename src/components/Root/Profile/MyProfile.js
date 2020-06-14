@@ -33,6 +33,7 @@ const MyProfile = (props) => {
   const [currentUser, setcurrentUser] = useState(props.location.currentUser);
   const [profileUser, setprofileUser] = useState(props.location.profileUser);
   const [groupNo, setGroupNo] = useState(props.location.currentUser?.GroupNo);
+  const [content, setContent] = useState('');
   const [firstname, setfirstname] = useState(
     props.location.currentUser?.firstName
   );
@@ -51,7 +52,7 @@ const MyProfile = (props) => {
   const [userlist, setUserlist] = useState(props.location.userlist);
 
   useEffect(() => {
-    fetch("https://ipapi.co/json/")
+    fetch("http://ipapi.co/json/")
       .then((res) => res.json())
       .then((result) => {
         setlocationAPI(result);
@@ -62,12 +63,11 @@ const MyProfile = (props) => {
       .then((data) => setUserlist(data.response));
   }, []);
 
-  const sendSMS = (phoneNumberreceiver, phoneNumbersender) => {
+  const sendSMS = (content) => {
     fetch(`https://groupmateproject.herokuapp.com/user/sendsms/`, {
       method: "post",
       body: JSON.stringify({
-        phoneNumberreceiver: phoneNumberreceiver,
-        phoneNumbersender: phoneNumbersender,
+        content: content
       }),
       headers: {
         "Content-Type": "application/json",
@@ -100,7 +100,6 @@ const MyProfile = (props) => {
       />
     );
   } else {
-    console.log("props.location.profileUser==", profileUser, currentUser);
     return (
       <div>
         <Form
@@ -207,6 +206,18 @@ const MyProfile = (props) => {
               }}
             />
           </FormGroup>
+          <div class="col-sm">
+                {profileUser && (
+                  <Input
+                  type="text"
+                  placeholder="SMS Content"
+                  value={content}
+                  onChange={(event) => {
+                    setContent(event.target.value);
+                  }}
+                />
+                )}
+              </div>
           <div class="container">
             <div class="row">
               <div class="col-sm">
@@ -256,7 +267,7 @@ const MyProfile = (props) => {
                     style={{ margin: 20 }}
                     color="primary"
                     className="col btn btn-primary btn-lg"
-                    onClick={() => sendSMS(currentUser?.phoneNumber, 123456)}
+                    onClick={() => sendSMS(content)}
                   >
                     Send SMS
                   </Button>

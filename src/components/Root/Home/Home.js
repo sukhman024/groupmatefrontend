@@ -41,11 +41,6 @@ export default function SignIn() {
   const [redirectToProfile,setRedirectToProfile]= useState(false);
   
   const [username,setUsername]= useState('');
-  fetch('https://api.coindesk.com/v1/bpi/historical/close.json')
-  .then(response => response.json())
-  .then(data => {
-    console.log(data.disclaimer);
-  });
 
   const classes = useStyles();
 
