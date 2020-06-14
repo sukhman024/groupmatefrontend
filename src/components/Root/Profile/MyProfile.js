@@ -209,7 +209,7 @@ const MyProfile = (props) => {
               }}
             />
           </FormGroup>
-          <div class="col-sm">
+          <div >
                 {profileUser && (
                   <Input
                   type="text"
@@ -223,12 +223,12 @@ const MyProfile = (props) => {
               </div>
           <div class="container">
             <div class="row">
-              <div class="col-sm">
+              <div>
                 {
                   !profileUser && (
                     <Button
                   color="primary"
-                  style={{ margin: 20, width:150 }}
+                  style={{ margin: 20, width:100 }}
                   onClick={() =>
                     updateProfileToMongo({
                       groupNo,
@@ -250,9 +250,9 @@ const MyProfile = (props) => {
                   }
               </div>
 
-              <div class="col-sm">
+              <div >
                 <Button
-                  style={{ margin: 20, width:150 }}
+                  style={{ margin: 20, width:100 }}
                   color="primary"
                   className="col btn btn-primary btn-lg"
                   onClick={() => setredirection("Group")}
@@ -260,9 +260,9 @@ const MyProfile = (props) => {
                   Group
                 </Button>
               </div>
-              <div class="col-sm">
+              <div>
                 <Button
-                  style={{ margin: 20, width:150 }}
+                  style={{ margin: 20, width:100 }}
                   color="primary"
                   className="col btn btn-primary btn-lg"
                   onClick={() => setredirection("Students")}
@@ -270,10 +270,10 @@ const MyProfile = (props) => {
                   List
                 </Button>
               </div>
-              <div class="col-sm">
+              <div s>
                 {profileUser && (
                   <Button
-                    style={{ margin: 20, width:150 }}
+                    style={{ margin: 20, width:100 }}
                     color="primary"
                     className="col btn btn-primary btn-lg"
                     onClick={() => sendSMS(content)}
