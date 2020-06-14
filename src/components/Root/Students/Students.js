@@ -38,18 +38,22 @@ const Students = (props) => {
     return (
       <div>
         <React.Fragment>
-          <h1 className="Cen">Student list</h1>
+        <h1 class="d-flex justify-content-center">Team up!</h1>
+          <h6 class="d-flex justify-content-center"> Mate, where's your group?
+          </h6>
+          <div style={{paddingRight:60, paddingLeft:60, paddingTop:10}}>
+          <h3 class="d-flex justify-content-center">Student list</h3>
           <TableContainer
             component={Paper}
-            style={{ width: "50rem", height: "50rem", margin: "auto" }}
+            class="table"
           >
             <Table className={classes.table} aria-label="simple table">
-              <TableHead>
+              <TableHead class="thead-light">
                 <TableRow>
                   <TableCell>First Name</TableCell>
-                  <TableCell align="right">Last Name</TableCell>
-                  <TableCell align="right">Username</TableCell>
-                  <TableCell align="right">Group Number</TableCell>
+                  <TableCell >Last Name</TableCell>
+                  <TableCell >Username</TableCell>
+                  <TableCell >Group Number</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -58,8 +62,8 @@ const Students = (props) => {
                     <TableCell component="th" scope="row">
                       {row.firstName}
                     </TableCell>
-                    <TableCell align="right">{row.lastName}</TableCell>
-                    <TableCell align="right">
+                    <TableCell >{row.lastName}</TableCell>
+                    <TableCell >
                       <Link href="#" onClick={()=>{
                         setCurrentUser(row)
                         setRedirect('profile')
@@ -67,12 +71,13 @@ const Students = (props) => {
                         {row.email}
                       </Link>
                     </TableCell>
-                    <TableCell align="right">{row.groupNum}</TableCell>
+                    <TableCell >{row.groupNum}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
           </TableContainer>
+          </div>
         </React.Fragment>
       </div>
     );

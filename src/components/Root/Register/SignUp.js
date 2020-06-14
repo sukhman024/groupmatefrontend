@@ -1,4 +1,4 @@
-import React, { useState, seEffect, useEffect } from "react";
+import React, { useState} from "react";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { Redirect } from "react-router-dom";
 import * as firebase from "firebase";
@@ -34,7 +34,6 @@ const signup = (user, currentStatus) => {
           res.json();
         })
         .then((data) => {
-          
           currentStatus("user");
         });
     })
@@ -63,7 +62,7 @@ const SignUp = () => {
       unit: "node",
       groupNum: 0,
     };
-    setCurrentUser(userObj)
+    setCurrentUser(userObj);
     return (
       <Redirect
         to={{
@@ -80,82 +79,90 @@ const SignUp = () => {
             {status === "user" ? <Redirect to="/Profile" /> : <SignUp />}
           </div>
         ) : (
-          <Form className="App">
-            <h1 className="Cen">TeamUp Registration</h1>
-            <h2 className="Cen">Enter Details</h2>
-            <FormGroup>
-              <label className="Cen">Email</label>
-              <Input
-                className="Username"
-                type="Email"
-                placeholder="Email"
-                onChange={(event) => {
-                  setusername(event.target.value);
-                }}
-              />
-            </FormGroup>
-            <FormGroup>
-              <label className="Cen">FirstName</label>
-              <Input
-                className="Username"
-                type="FirstName"
-                placeholder="FirstName"
-                onChange={(event) => {
-                  setfirstname(event.target.value);
-                }}
-              />
-            </FormGroup>
-            <FormGroup>
-              <label className="Cen">LastName</label>
-              <Input
-                className="Username"
-                type="LastName"
-                placeholder="LastName"
-                onChange={(event) => {
-                  setlastname(event.target.value);
-                }}
-              />
-            </FormGroup>
-            <FormGroup>
-              <label className="Cen">PhoneNumber</label>
-              <Input
-                className="Username"
-                type="PhoneNumber"
-                placeholder="PhoneNumber"
-                onChange={(event) => {
-                  setphonenumber(event.target.value);
-                }}
-              />
-            </FormGroup>
-            <FormGroup>
-              <label className="Cen">Password</label>
-              <Input
-                className="Password"
-                type="Password"
-                placeholder="Password"
-                onChange={(event) => {
-                  setpassword(event.target.value);
-                }}
-              />
-            </FormGroup>
-
-            <Button
-              onClick={() =>
-                signup(
-                  {
-                    firstName: firstname,
-                    lastName: lastname,
-                    email: username,
-                    password: password,
-                  },
-                  currentStatus
-                )
-              }
-              className="block"
+          <div >
+            <Form
+              className="App"
+              style={{ width: "35%", padding: 100, margin: "auto" }}
             >
-              Sign Up
-            </Button>
-          </Form>
+              <h1 class="d-flex justify-content-center">Team up!</h1>
+            <h6 class="d-flex justify-content-center">Mate, where's your group?</h6>
+              <FormGroup>
+                <label className="Cen">Email</label>
+                <Input
+                  className="form-control"
+                  type="Email"
+                  placeholder="Email"
+                  onChange={(event) => {
+                    setusername(event.target.value);
+                  }}
+                />
+              </FormGroup>
+              <FormGroup>
+                <label className="Cen">First Name</label>
+                <Input
+                  className="form-control"
+                  type="FirstName"
+                  placeholder="First Name"
+                  onChange={(event) => {
+                    setfirstname(event.target.value);
+                  }}
+                />
+              </FormGroup>
+              <FormGroup>
+                <label className="Cen">Last Name</label>
+                <Input
+                  className="form-control"
+                  type="Last Name"
+                  placeholder="Last Name"
+                  onChange={(event) => {
+                    setlastname(event.target.value);
+                  }}
+                />
+              </FormGroup>
+              <FormGroup>
+                <label className="Cen">Phone Number</label>
+                <Input
+                  className="form-control"
+                  type="Phone Number"
+                  placeholder="Phone Number"
+                  onChange={(event) => {
+                    setphonenumber(event.target.value);
+                  }}
+                />
+              </FormGroup>
+              <FormGroup>
+                <label className="Cen">Password</label>
+                <Input
+                  className="form-control"
+                  type="Password"
+                  placeholder="Password"
+                  onChange={(event) => {
+                    setpassword(event.target.value);
+                  }}
+                />
+              </FormGroup>
+
+              <Button
+              type="submit"
+              className="btn btn-primary btn-block"
+              color='primary'
+              style={{ width: "50%", margin:'auto' }}
+                onClick={() =>
+                  signup(
+                    {
+                      firstName: firstname,
+                      lastName: lastname,
+                      email: username,
+                      password: password,
+                    },
+                    currentStatus
+                  )
+                }
+              >
+                Sign Up
+              </Button>
+            </Form>
+          </div>
         )}
       </div>
     );

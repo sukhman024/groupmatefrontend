@@ -4,7 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import Root from "./components/Root";
 import * as firebase from "firebase";
 import { firebaseConfig } from "./FirebaseConfig";
-
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 if (firebase.apps.length === 0) {
   firebase.initializeApp(firebaseConfig);
   firebase.analytics();

@@ -1,4 +1,4 @@
-import React, { useState,  useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { Redirect } from "react-router-dom";
 
@@ -62,17 +62,21 @@ const MyProfile = (props) => {
       .then((data) => setUserlist(data.response));
   }, []);
 
-  const sendSMS=(phoneNumberreceiver, phoneNumbersender)=>{
+  const sendSMS = (phoneNumberreceiver, phoneNumbersender) => {
     fetch(`https://groupmateproject.herokuapp.com/user/sendsms/`, {
       method: "post",
-      body: JSON.stringify({phoneNumberreceiver:phoneNumberreceiver, phoneNumbersender:phoneNumbersender}),
+      body: JSON.stringify({
+        phoneNumberreceiver: phoneNumberreceiver,
+        phoneNumbersender: phoneNumbersender,
+      }),
       headers: {
         "Content-Type": "application/json",
       },
-    }).then(response => response.json())
-    .then(data => {
-      console.log('data received, sms sent')
-    });
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("data received, sms sent");
+      });
   };
 
   if (redirection === "Group") {
@@ -95,14 +99,18 @@ const MyProfile = (props) => {
         }}
       />
     );
-  }
-  else {
-    console.log('props.location.profileUser==',profileUser, currentUser)
+  } else {
+    console.log("props.location.profileUser==", profileUser, currentUser);
     return (
       <div>
-        <Form className="App">
-          <h1 className="Cen">My Profile</h1>
-          <h2 className="Cen">Enter Details</h2>
+        <Form
+          className="App"
+          style={{ width: "35%", padding: 50, margin: "auto" }}
+        >
+          <h1 class="d-flex justify-content-center">Team up!</h1>
+          <h6 class="d-flex justify-content-center">
+            Mate, where's your group?
+          </h6>
           <FormGroup>
             <label className="Cen">GroupNo</label>
             <Input
@@ -199,32 +207,63 @@ const MyProfile = (props) => {
               }}
             />
           </FormGroup>
+          <div class="container">
+            <div class="row">
+              <div class="col-sm">
+                <Button
+                  color="primary"
+                  style={{ margin: 20 }}
+                  onClick={() =>
+                    updateProfileToMongo({
+                      groupNo,
+                      firstname,
+                      lastname,
+                      phonenumber,
+                      skillset,
+                      unit,
+                      userEmail,
+                    })
+                  }
+                  className="col btn btn-primary btn-lg"
+                >
+                  Update
+                </Button>
+              </div>
 
-          <Button
-            onClick={() =>
-              updateProfileToMongo({
-                groupNo,
-                firstname,
-                lastname,
-                phonenumber,
-                skillset,
-                unit,
-                userEmail,
-              })
-            }
-            className="block"
-          >
-            Update
-          </Button>
-          <Button onClick={() => setredirection("Group")} className="block">
-            Group
-          </Button>
-          <Button onClick={() => setredirection("Students")} className="block">
-            StudentsList
-          </Button>
-          {profileUser && <Button onClick={() => sendSMS(currentUser?.phoneNumber, 123456)} className="block">
-            Send SMS
-          </Button>}
+              <div class="col-sm">
+                <Button
+                  style={{ margin: 20 }}
+                  color="primary"
+                  className="col btn btn-primary btn-lg"
+                  onClick={() => setredirection("Group")}
+                >
+                  Group
+                </Button>
+              </div>
+              <div class="col-sm">
+                <Button
+                  style={{ margin: 20 }}
+                  color="primary"
+                  className="col btn btn-primary btn-lg"
+                  onClick={() => setredirection("Students")}
+                >
+                  List
+                </Button>
+              </div>
+              <div class="col-sm">
+                {profileUser && (
+                  <Button
+                    style={{ margin: 20 }}
+                    color="primary"
+                    className="col btn btn-primary btn-lg"
+                    onClick={() => sendSMS(currentUser?.phoneNumber, 123456)}
+                  >
+                    Send SMS
+                  </Button>
+                )}
+              </div>
+            </div>
+          </div>
         </Form>
       </div>
     );
